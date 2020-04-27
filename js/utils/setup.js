@@ -13,33 +13,29 @@ export function canvasInit(c, fr){
 	c.setAttribute('width', parseInt(styleWidth) * dpr);
 
 	// setup magnets
-	let magnets = new Array(2);
-	for (let i = 0; i < magnets.length; i++){
-		magnets[i] = new Magnet(1,.5,{x:100*i + 50,y:100});
-	}
+	let primaryMagnet = new Magnet(1,.5,{x: 50, y: 50, h: 50, w: 20})
 
 	let mouseX;
 	let mouseY;
 	c.addEventListener('mousemove',(e) => {
 		const rect = c.getBoundingClientRect();
-		mouseX = e.clientX - rect.left;
-		mouseY = e.clientY - rect.top;
+		mouseX = (e.clientX - rect.left) * dpr;
+		mouseY = (e.clientY - rect.top) * dpr;
 	});
 
 	c.addEventListener('click',(e)=>{
-		console.log(`${mouseX},${mouseY}`)
-		for (let i = 0; i < magnets.length; i++){
-
+		const x = primaryMagnet.position.x;
+		const y = primaryMagnet.position.y;
+		const w = primaryMagnet.position.w;
+		const h = primaryMagnet.position.h;
+		if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h){
+			primaryMagnet.dragging = true;
 		}
 	})
-	canvasUpdate()
+	let anim = setInterval(canvasUpdate, 1000/fr);
 	//handle mouse clicks at interval
 	function canvasUpdate(){
-		//if mouse is clicked, check if it is over a magnet
-		//	if so, set magnet.dragging to true, lock it to the mouse
-		//if magnet.dragging true and mouse is released, set to false
-		for (let i = 0; i < magnets.length; i++){
-			magnets[i].draw(ctx);
-		}
+		primaryMagnet.draw(ctx);
+
 	}
 }

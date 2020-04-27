@@ -10,12 +10,17 @@ export class Magnet{
 		this.decay = decay;
 		this.position.x = position.x;
 		this.position.y = position.y;
+		this.position.w = position.w;
+		this.position.h = position.h;
+		this.dragging = false;
 	}
 	draw(ctx){
 		const posX = this.position.x;
 		const posY = this.position.y;
+		const width = this.position.w;
+		const height = this.position.h;
 		ctx.fillStyle = '#c98b8b'
-		ctx.fillRect(posX,posY,30,20);
+		ctx.fillRect(posX,posY,width,height);
 	}
 
 }

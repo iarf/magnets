@@ -3,5 +3,5 @@ import { Magnet, Particle } from './utils/types.js';
 
 window.onload = () => {
 	const c = document.querySelector('#stage');
-	canvasInit(c);
+	canvasInit(c,24);
 }
